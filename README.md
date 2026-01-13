@@ -1,5 +1,45 @@
 # InSim Delta Time
 
+**[English](#english)** | **[Português](#português)**
+
+---
+
+## English
+
+This project is an InSim client for **Live for Speed (LFS)** focused on calculating **delta time** in **real time** during a race.
+
+The main goal is to let you know at which points on the track you are gaining or losing time by comparing two laps using reference points defined by a `.lyt` layout file.
+
+### Features
+
+- Connection to LFS via InSim  
+- Real-time delta time calculation between laps  
+
+### How it works
+
+1. A track `.pth` file is converted into a `.lyt` layout (not yet integrated with InSim)  
+2. The layout defines reference points along the track  
+3. When a car crosses these points, the lap time up to that point is recorded  
+4. Delta time is calculated by comparing two laps at the same points  
+
+### Usage
+
+```bash
+npm start
+```
+
+## Images
+
+![lfs_00000008](https://github.com/user-attachments/assets/839634fb-37f3-4e18-a8de-27c6c43d5888)
+*Figura 1 – Example of the HUD showing real-time delta time.*
+
+![lfs_00000009](https://github.com/user-attachments/assets/999733b0-1efc-422c-9ea4-60fa8e9977d6)
+*Figura 2 – Example of the reference points.*
+
+---
+
+## Português
+
 Este projeto é um cliente InSim para **Live for Speed (LFS)** focado em calcular o **delta time** de uma corrida em **tempo real**.
 
 O objetivo principal é permiti saber quais pontos da pista você está ganhando ou perdendo tempo ao comparar duas voltas utilzando pontos de referência predeterminados pelo um arquivo `.lyt`.
