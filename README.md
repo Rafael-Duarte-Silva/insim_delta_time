@@ -12,15 +12,15 @@ The main goal is to let you know at which points on the track you are gaining or
 
 ### Features
 
-- Connection to LFS via InSim  
-- Real-time delta time calculation between laps  
+- Connection to LFS via InSim
+- Real-time delta time calculation between laps
 
 ### How it works
 
-1. A track `.pth` file is converted into a `.lyt` layout (not yet integrated with InSim)  
-2. The layout defines reference points along the track  
-3. When a car crosses these points, the lap time up to that point is recorded  
-4. Delta time is calculated by comparing two laps at the same points  
+1. A track `.pth` file is converted into a `.lyt` layout (not yet integrated with InSim)
+2. The layout defines reference points along the track
+3. When a car crosses these points, the lap time up to that point is recorded
+4. Delta time is calculated by comparing two laps at the same points
 
 ### Usage
 
@@ -31,10 +31,10 @@ npm start
 ## Images
 
 ![lfs_00000008](https://github.com/user-attachments/assets/839634fb-37f3-4e18-a8de-27c6c43d5888)
-*Figura 1 – Example of the HUD showing real-time delta time.*
+_Figura 1 – Example of the HUD showing real-time delta time._
 
 ![lfs_00000009](https://github.com/user-attachments/assets/999733b0-1efc-422c-9ea4-60fa8e9977d6)
-*Figura 2 – Example of the reference points.*
+_Figura 2 – Example of the reference points._
 
 ---
 
@@ -47,7 +47,7 @@ O objetivo principal é permiti saber quais pontos da pista você está ganhando
 ### Funcionalidades
 
 - Conexão com o LFS via InSim
-- Cálculo de delta time em tempo real entre voltas 
+- Cálculo de delta time em tempo real entre voltas
 
 ### Como funciona
 
@@ -65,7 +65,7 @@ npm start
 ## Imagens
 
 ![lfs_00000008](https://github.com/user-attachments/assets/839634fb-37f3-4e18-a8de-27c6c43d5888)
-*Figura 1 – Exemplo do HUD exibindo o delta time em tempo real.*
+_Figura 1 – Exemplo do HUD exibindo o delta time em tempo real._
 
 ![lfs_00000009](https://github.com/user-attachments/assets/999733b0-1efc-422c-9ea4-60fa8e9977d6)
-*Figura 2 – Exemplo dos pontos de referência.*
+_Figura 2 – Exemplo dos pontos de referência._
