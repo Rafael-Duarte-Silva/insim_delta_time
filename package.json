@@ -23,7 +23,10 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
     "@electron-toolkit/utils": "^4.0.0",
-    "node-insim": "^6.2.0"
+    "@tailwindcss/vite": "^4.1.18",
+    "electron-overlay-window": "^4.0.2",
+    "node-insim": "^6.2.0",
+    "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",
