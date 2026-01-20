@@ -1,13 +1,5 @@
-import {
-  ButtonStyle,
-  ButtonTextColour,
-  InSimPacketInstance,
-  IS_BTN,
-  PacketType
-} from "node-insim/packets";
+import { InSimPacketInstance, PacketType } from "node-insim/packets";
 import { Player } from "./player.entity";
-import { Buttons } from "../button/button.constants";
-import { inSim } from "../../insim";
 import { mainWindow } from "../..";
 
 const playerList: Map<number, Player> = new Map();
@@ -18,7 +10,7 @@ class PlayerService {
     const player = new Player(packet.UCID, packet.PLID, packet.PType === IA_TYPE);
     playerList.set(packet.PLID, player);
 
-    this.drawDeltaButton(player, "^80");
+    //this.drawDeltaButton(player, "^80");
   }
 
   public get(PLID: number): Player | undefined {
@@ -40,11 +32,9 @@ class PlayerService {
     const key = this.hash(packet.Info.X, packet.Info.Y);
     const checkpointTime = packet.Time - 3000 - player.startLapTime;
     const bestLapCheckPointTime = player.bestLapCheckpoints.get(key) || 0;
-    const deltaTime = (checkpointTime - bestLapCheckPointTime) / 1000;
+    const deltaTime = checkpointTime - bestLapCheckPointTime;
 
     player.currentLapCheckpoints.set(key, checkpointTime);
-    this.drawDeltaButton(player, `${deltaTime < 0 ? "^8" : "^1+"}${deltaTime.toFixed(2)}`);
-
     mainWindow.webContents.send("delta_time", deltaTime);
   }
 
@@ -72,22 +62,6 @@ class PlayerService {
     player.startLapTime = 0;
     player.currentLapTime = 0;
     player.currentLapCheckpoints = new Map();
-  }
-
-  public drawDeltaButton(player: Player, Text: string): void {
-    inSim.send(
-      new IS_BTN({
-        ReqI: 1,
-        UCID: player.UCID,
-        ClickID: Buttons.DELTA_TIME,
-        BStyle: ButtonStyle.ISB_DARK | ButtonTextColour.OK,
-        L: 92,
-        T: 30,
-        W: 16,
-        H: 10,
-        Text: Text
-      })
-    );
   }
 }
 

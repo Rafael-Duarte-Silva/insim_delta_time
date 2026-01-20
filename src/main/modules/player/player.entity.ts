@@ -3,7 +3,6 @@ export class Player {
   public readonly PLID: number;
   public isAI: boolean;
 
-  public readonly totalNodes = 180;
   public startLapTime = 0;
   public lapsDone = 0;
   public bestLapCheckpoints: Map<string, number> = new Map();

@@ -1,6 +1,6 @@
 {
   "name": "insim_delta_time",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "An Insim to monitor your runs",
   "main": "./out/main/index.js",
   "author": "Rafael-Duarte-Silva",

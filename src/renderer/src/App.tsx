@@ -1,17 +1,12 @@
-import { useEffect, useState } from "react";
+import "./App.css";
+import { DeltaTime } from "./components/DeltaTime";
 
 function App(): React.JSX.Element {
-  const [deltaTime, setDeltaTime] = useState<number>(0);
-
-  useEffect(() => {
-    const unsubscribe = window.api.onDeltaTime((data) => {
-      setDeltaTime(data);
-    });
-
-    return unsubscribe;
-  }, []);
-
-  return <div>{deltaTime.toFixed(2)}</div>;
+  return (
+    <div className=" w-screen h-screen relative flex justify-center">
+      <DeltaTime />
+    </div>
+  );
 }
 
 export default App;
