@@ -9,8 +9,6 @@ class PlayerService {
     const IA_TYPE = 2;
     const player = new Player(packet.UCID, packet.PLID, packet.PType === IA_TYPE);
     playerList.set(packet.PLID, player);
-
-    //this.drawDeltaButton(player, "^80");
   }
 
   public get(PLID: number): Player | undefined {
