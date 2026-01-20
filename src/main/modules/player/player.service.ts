@@ -1,13 +1,18 @@
 import { InSimPacketInstance, PacketType } from "node-insim/packets";
 import { Player } from "./player.entity";
 import { mainWindow } from "../..";
+import { connectionService } from "../connection/connection.service";
 
 const playerList: Map<number, Player> = new Map();
 
 class PlayerService {
   public create(packet: InSimPacketInstance<PacketType.ISP_NPL>): void {
     const IA_TYPE = 2;
-    const player = new Player(packet.UCID, packet.PLID, packet.PType === IA_TYPE);
+
+    const connection = connectionService.get(packet.UCID);
+    if (connection === undefined) return;
+
+    const player = new Player(packet.PLID, packet.PType === IA_TYPE, connection);
     playerList.set(packet.PLID, player);
   }
 
@@ -29,7 +34,7 @@ class PlayerService {
 
     const key = this.hash(packet.Info.X, packet.Info.Y);
     const checkpointTime = packet.Time - 3000 - player.startLapTime;
-    const bestLapCheckPointTime = player.bestLapCheckpoints.get(key) || 0;
+    const bestLapCheckPointTime = player.connection.bestLapCheckpoints.get(key) || 0;
     const deltaTime = checkpointTime - bestLapCheckPointTime;
 
     player.currentLapCheckpoints.set(key, checkpointTime);
@@ -44,22 +49,28 @@ class PlayerService {
     player.startLapTime = packet.ETime;
     player.currentLapTime = packet.LTime;
 
-    if (player.bestLapTime > 0 && player.currentLapTime > player.bestLapTime) {
+    if (
+      player.connection.bestLapTime > 0 &&
+      player.currentLapTime > player.connection.bestLapTime
+    ) {
       return;
     }
 
-    player.bestLapTime = player.currentLapTime;
-    player.bestLapCheckpoints = new Map(player.currentLapCheckpoints);
+    player.connection.bestLapTime = player.currentLapTime;
+    player.connection.bestLapCheckpoints = new Map(player.currentLapCheckpoints);
   }
 
   public reset(PLID: number): void {
     const player = this.get(PLID);
     if (player === undefined) return;
 
-    player.lapsDone = 0;
-    player.startLapTime = 0;
-    player.currentLapTime = 0;
-    player.currentLapCheckpoints = new Map();
+    player.reset();
+  }
+
+  public resetAll(): void {
+    playerList.forEach((player) => {
+      player.reset();
+    });
   }
 }
 

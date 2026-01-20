@@ -1,3 +1,4 @@
+export { onNewConnection } from "./connection/onNewConnection";
 export { onVersion } from "./connection/onVersion";
 export { onPlayerJoin } from "./player/onPlayerJoin";
 export { onPlayerLeave } from "./player/onPlayerLeave";
