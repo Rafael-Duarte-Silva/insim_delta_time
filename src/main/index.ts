@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, globalShortcut } from "electron";
+import { app, shell, BrowserWindow } from "electron";
 import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import icon from "../../resources/icon.png?asset";
@@ -73,7 +73,6 @@ app.whenReady().then(() => {
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
-    globalShortcut.unregisterAll();
   }
 });
 
