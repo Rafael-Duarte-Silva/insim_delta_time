@@ -1,24 +1,27 @@
-import { app, shell, BrowserWindow, ipcMain } from "electron";
+import { app, shell, BrowserWindow, globalShortcut } from "electron";
 import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import icon from "../../resources/icon.png?asset";
 import { connectInsim } from "./insim";
+import { OVERLAY_WINDOW_OPTS, OverlayController } from "electron-overlay-window";
 
 export let mainWindow: BrowserWindow;
 
 function createWindow(): void {
-  // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
-    show: false,
-    autoHideMenuBar: true,
+    width: 1920,
+    height: 1080,
+    ...OVERLAY_WINDOW_OPTS,
     ...(process.platform === "linux" ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
-      sandbox: false
+      sandbox: false,
+      nodeIntegration: true,
+      contextIsolation: false
     }
   });
+
+  OverlayController.attachByTitle(mainWindow, "Live for Speed");
 
   mainWindow.on("ready-to-show", () => {
     mainWindow.show();
@@ -52,11 +55,7 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
 
-  // IPC test
-  ipcMain.on("ping", () => console.log("pong"));
-
   createWindow();
-
   mainWindow.webContents.once("did-finish-load", () => {
     connectInsim();
   });
@@ -74,6 +73,7 @@ app.whenReady().then(() => {
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
+    globalShortcut.unregisterAll();
   }
 });
 
