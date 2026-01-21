@@ -7,11 +7,12 @@ const playerList: Map<number, Player> = new Map();
 
 class PlayerService {
   public create(packet: InSimPacketInstance<PacketType.ISP_NPL>): void {
-    const IA_TYPE = 2;
+    if (playerService.get(packet.PLID)) return;
 
     const connection = connectionService.get(packet.UCID);
     if (connection === undefined) return;
 
+    const IA_TYPE = 2;
     const player = new Player(packet.PLID, packet.PType === IA_TYPE, connection);
     playerList.set(packet.PLID, player);
   }
