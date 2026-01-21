@@ -3,7 +3,7 @@ import { PacketType } from "node-insim/packets";
 import {
   onCheckpoint,
   onLapFinish,
-  onNewConnection,
+  onConnectionJoin,
   onPlayerJoin,
   onPlayerLeave,
   onPlayerPit,
@@ -12,7 +12,7 @@ import {
 } from "../handlers";
 
 export function events(): void {
-  inSim.on(PacketType.ISP_NCN, onNewConnection);
+  inSim.on(PacketType.ISP_NCN, onConnectionJoin);
   inSim.on(PacketType.ISP_VER, onVersion);
   inSim.on(PacketType.ISP_NPL, onPlayerJoin);
   inSim.on(PacketType.ISP_PLL, onPlayerLeave);
