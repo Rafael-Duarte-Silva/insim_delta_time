@@ -1,11 +1,14 @@
 import { app, shell, BrowserWindow, Tray, Menu } from "electron";
-import { join } from "path";
+import path, { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import icon from "../../resources/icon.png?asset";
 import { connectInsim } from "./insim";
 import { OVERLAY_WINDOW_OPTS, OverlayController } from "electron-overlay-window";
+import fs from "fs";
+import { Config } from "./types";
 
 export let mainWindow: BrowserWindow;
+export let config: Config;
 
 function createWindow(): void {
   mainWindow = new BrowserWindow({
@@ -58,6 +61,11 @@ app.whenReady().then(() => {
   createWindow();
   mainWindow.webContents.once("did-finish-load", () => {
     connectInsim();
+
+    const dataPath = app.getPath("userData");
+    const filePath = path.join(dataPath, "config.json");
+    const content = fs.readFileSync(filePath, "utf-8");
+    config = JSON.parse(content);
   });
 
   app.on("activate", function () {

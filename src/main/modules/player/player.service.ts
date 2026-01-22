@@ -39,6 +39,8 @@ class PlayerService {
     const deltaTime = checkpointTime - bestLapCheckPointTime;
 
     player.currentLapCheckpoints.set(key, checkpointTime);
+
+    if (player.connection.UCID !== 0) return;
     mainWindow.webContents.send("delta_time", deltaTime);
   }
 
