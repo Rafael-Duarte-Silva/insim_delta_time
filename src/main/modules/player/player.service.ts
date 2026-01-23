@@ -7,13 +7,15 @@ const playerList: Map<number, Player> = new Map();
 
 class PlayerService {
   public create(packet: InSimPacketInstance<PacketType.ISP_NPL>): void {
-    if (playerService.get(packet.PLID)) return;
-
     const connection = connectionService.get(packet.UCID);
     if (connection === undefined) return;
 
+    connection.handleReset(packet.CName);
+
+    if (this.get(packet.PLID)) return;
+
     const IA_TYPE = 2;
-    const player = new Player(packet.PLID, packet.PType === IA_TYPE, connection);
+    const player = new Player(packet.PLID, packet.PType === IA_TYPE, connection, packet.CName);
     playerList.set(packet.PLID, player);
   }
 
@@ -61,19 +63,6 @@ class PlayerService {
 
     player.connection.bestLapTime = player.currentLapTime;
     player.connection.bestLapCheckpoints = new Map(player.currentLapCheckpoints);
-  }
-
-  public reset(PLID: number): void {
-    const player = this.get(PLID);
-    if (player === undefined) return;
-
-    player.reset();
-  }
-
-  public resetAll(): void {
-    playerList.forEach((player) => {
-      player.reset();
-    });
   }
 }
 

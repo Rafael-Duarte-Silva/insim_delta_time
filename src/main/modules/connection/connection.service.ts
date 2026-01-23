@@ -9,12 +9,18 @@ class ConnectionService {
     connectionList.set(packet.UCID, connection);
   }
 
-  public get(PLID: number): Connection | undefined {
-    return connectionList.get(PLID);
+  public get(UCID: number): Connection | undefined {
+    return connectionList.get(UCID);
   }
 
-  public delete(PLID: number): void {
-    connectionList.delete(PLID);
+  public delete(UCID: number): void {
+    connectionList.delete(UCID);
+  }
+
+  public resetAll(): void {
+    connectionList.forEach((connection) => {
+      connection.reset();
+    });
   }
 }
 
